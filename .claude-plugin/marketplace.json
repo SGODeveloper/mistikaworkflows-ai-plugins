@@ -9,7 +9,7 @@
     {
       "name": "mistika-workflows",
       "source": "./plugins/mistika-workflows",
-      "description": "Let Claude handle your media tasks: transcoding, proxies, metadata, deliveries and notifications, built and run with Mistika Workflows on your own computer.",
+      "description": "Let Claude handle your media tasks: transcodes, proxies, metadata, color, AI dubbing and transcription, QC and deliveries, built and run with Mistika Workflows on your own computer.",
       "category": "media",
       "tags": [
         "mistika",
@@ -22,7 +22,11 @@
         "delivery",
         "prores",
         "automation",
-        "sgo"
+        "sgo",
+        "color",
+        "qc",
+        "dubbing",
+        "transcription"
       ]
     }
   ]

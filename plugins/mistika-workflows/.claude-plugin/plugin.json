@@ -1,8 +1,8 @@
 {
   "name": "mistika-workflows",
   "displayName": "Mistika Workflows",
-  "version": "0.1.1",
-  "description": "Let Claude handle your media tasks: transcoding, proxies, metadata, deliveries and notifications, built and run with Mistika Workflows on your own computer.",
+  "version": "0.1.2",
+  "description": "Let Claude handle your media tasks: transcodes, proxies, metadata, color, AI dubbing and transcription, QC and deliveries, built and run with Mistika Workflows on your own computer.",
   "author": {
     "name": "SGO",
     "url": "https://www.sgo.es"
@@ -21,6 +21,10 @@
     "delivery",
     "prores",
     "automation",
-    "sgo"
+    "sgo",
+    "color",
+    "qc",
+    "dubbing",
+    "transcription"
   ]
 }

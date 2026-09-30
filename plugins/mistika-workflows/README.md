@@ -1,25 +1,33 @@
 # Mistika Workflows for Claude
 
-**Let Claude handle your media tasks.** Transcoding, proxies, metadata, deliveries and notifications: describe what you need, and Claude builds and runs it with [Mistika Workflows](https://www.sgo.es/mistika-workflows/), SGO's media automation software, on your own computer.
+**Let Claude handle your media tasks.** Transcodes, proxies, metadata reports, color pipelines, AI dubbing and transcription, quality checks and deliveries: describe what you need, and Claude builds and runs it with [Mistika Workflows](https://www.sgo.es/mistika-workflows/), SGO's media automation software, on your own computer.
 
 ## What you can ask for
 
 - "Transcode every .mov in D:/rushes to ProRes 422 HQ and put the results in D:/masters."
-- "Make H.264 proxies of today's footage and email me when they are done."
-- "Upload the finished masters to our Aspera server and post a message in Slack."
+- "Make H.264 proxies of today's footage, upload them to Frame.io and email me when they are done."
+- "Apply the CDLs from this EDL and render EXR plates in ACES for the VFX team."
+- "Run an automated QC on these masters, send them to our Aspera server and post a message in Slack."
+- "Dub this promo into Spanish with ElevenLabs."
 - "Export the frame rate and resolution of these clips to a CSV file."
-- "Run my 'Social deliveries' template on this folder."
 - "Build a workflow for this delivery and save it as a template, so I can reuse it."
 
 Claude picks the right nodes, connects them, checks that the workflow is valid, runs it and tells you what it produced. When a value is missing, such as a destination or a login, Claude asks you instead of guessing.
 
 ## Why Mistika Workflows
 
-- **Production-quality processing.** ProRes on Windows, macOS and Linux, GPU-accelerated H.264 and H.265, OpenEXR and camera RAW, with color management and metadata preserved.
+- **Production-quality processing.** ProRes on Windows, macOS and Linux, DNxHD and DNxHR, XAVC, XDCAM, GPU-accelerated H.264 and H.265, OpenEXR and camera RAW, with color management and metadata preserved.
 - **Your media stays on your computer.** The files are processed locally by Mistika Workflows; Claude works with the workflow, the file names and the results.
 - **Nothing hidden.** Open Mistika Workflows to watch the workflows Claude builds, adjust them by hand and reuse them. Every run goes through the task queue, with its log.
-- **More than transcoding.** Around 250 nodes: deliveries to Aspera, Signiant, Frame.io, Dropbox, AWS, YouTube, Vimeo and ShotGrid, email and Slack notifications, metadata and CDL handling, quality checks, AI nodes and your own Python nodes.
+- **More than transcoding.** Around 250 nodes:
+  - **Deliveries**: Aspera, Signiant, MASV, FTP, AWS S3, Azure, Google Drive, OneDrive, Dropbox, Frame.io, PIX, YouTube and Vimeo, plus AS-11 and DCP deliverables.
+  - **Notifications**: email, Slack, Microsoft Teams, Discord and WhatsApp.
+  - **Color and VFX**: ACES, CDLs, 3D LUTs, EDL-driven VFX pulls and ShotGrid publishing.
+  - **Quality and AI**: automated QC with Pulsar and Qscan, loudness checks, ElevenLabs dubbing and voice, Amberscript transcription and Pixell AI image enhancement.
+  - **Metadata and files**: reports to CSV, ALE and Excel, sorting, checksums and renaming with metadata tokens, plus your own Python nodes.
 - **Your templates, your way.** Claude can start from the templates you already use, or save the workflows it builds as new templates.
+
+Services from other companies, such as ElevenLabs, Amberscript, Pixell AI, QC tools and cloud storage, need your own account with them.
 
 ## Get started
 
@@ -31,8 +39,9 @@ Requirements: Mistika Workflows 11.7 or later. The Mistika Workflows tools work 
 
 ## How it works
 
-Mistika Workflows 11.7 and later include an MCP server, `workflowsMcpServer`. The Mistika Workflows installer installs it and connects it to the AI apps it finds on the computer, Claude Desktop included. This plugin adds a setup skill that helps Claude to:
+Mistika Workflows 11.7 and later include an MCP server, `workflowsMcpServer`. The Mistika Workflows installer installs it and connects it to the AI apps it finds on the computer, Claude Desktop included. This plugin adds a get-started skill that helps Claude to:
 
+- tell you what Mistika Workflows can do for your media tasks;
 - check whether Mistika Workflows is installed and connected to Claude;
 - help you install it when it is missing: the free trial or a subscription, the installer for your operating system and the steps after installing;
 - connect an existing installation to Claude Desktop or Claude Code when its tools do not show up;

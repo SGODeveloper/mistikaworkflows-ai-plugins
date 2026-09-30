@@ -6,7 +6,7 @@ Put SGO tools to work for you, straight from a conversation with Claude. Start w
 
 | Plugin | What it does |
 | --- | --- |
-| [`mistika-workflows`](plugins/mistika-workflows) | Let Claude handle your media tasks: transcoding, proxies, metadata, deliveries and notifications, built and run with Mistika Workflows on your own computer. |
+| [`mistika-workflows`](plugins/mistika-workflows) | Let Claude handle your media tasks: transcodes, proxies, metadata, color, AI dubbing and transcription, QC and deliveries, built and run with Mistika Workflows on your own computer. |
 
 ## Install
 
