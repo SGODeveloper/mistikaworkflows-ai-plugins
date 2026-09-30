@@ -50,7 +50,7 @@ The plugin contains instructions only (two skills). It runs no code when it is i
 
 When you ask Claude to install or connect Mistika Workflows, Claude may, with your confirmation and only where it can run commands on your computer (Claude Code):
 
-- open the Mistika Workflows trial or download page on sgo.es in your browser, then check the signature of the installer you downloaded and open it, so you complete the installation yourself;
+- download the latest Mistika Workflows installer for your system from SGO's download server (`cdn1.www.sgo.es`), check its signature and open it, so you complete the installation yourself;
 - read the SGO installation file (`installation.xml`) to find where Mistika Workflows is installed and which version it is;
 - run `workflowsMcpServer --register-client claude` or `claude mcp add` to connect the installed MCP server to Claude.
 

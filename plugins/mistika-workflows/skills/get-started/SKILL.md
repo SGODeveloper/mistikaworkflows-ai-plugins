@@ -52,22 +52,28 @@ Then:
 
 ## 3. Install or update Mistika Workflows
 
-Do this only when the user wants it. First tell the user:
+Do this only when the user wants it. First tell the user that Mistika Workflows needs a license: the [30-day free trial](https://www.sgo.es/checkout/?add-to-cart=198766) or a [subscription or license](https://www.sgo.es/mistika-workflows-plans/). The installer always gets the latest version:
 
-- Mistika Workflows needs a license: the [30-day free trial](https://www.sgo.es/checkout/?add-to-cart=198766) or a [subscription or license](https://www.sgo.es/mistika-workflows-plans/).
-- The installer for their operating system is on the [Mistika Workflows page](https://www.sgo.es/mistika-workflows/).
+| System | Installer |
+| --- | --- |
+| Windows | https://cdn1.www.sgo.es/sgo/installers/releases/latest-win-workflows.exe |
+| macOS | https://cdn1.www.sgo.es/sgo/installers/releases/latest-osx-workflows.dmg |
+| Linux | https://cdn1.www.sgo.es/sgo/installers/releases/latest-linux-workflows.run |
 
-<!-- TODO(sgo): when the stable "latest installer" URL of each operating system is published, list it here (Windows, macOS, Linux) and let Claude Code download the installer from it directly, with the signature check below. -->
-
-The user downloads the installer from those pages. Do not look for installer files elsewhere on sgo.es or on other sites, and do not download one yourself.
+Use only these addresses: do not look for installers anywhere else.
 
 How to proceed depends on where you run:
 
 - **Claude Code**, with the user's confirmation:
-  1. Open the page in the user's default browser: `Start-Process "<url>"` on Windows, `open "<url>"` on macOS, `xdg-open "<url>"` on Linux.
-  2. When the user has downloaded the installer, ask for its path and check its signature before opening it. On Windows, `Get-AuthenticodeSignature <file>` must report `Valid`, signed by `SOLUCIONES GRAFICAS POR ORDENADOR SL`. On macOS, `spctl --assess --type open --context context:primary-signature -v <file>.dmg` must report `accepted` and `Notarized Developer ID`. If the check fails, tell the user not to run it.
-  3. Open the installer (`Start-Process <file>` on Windows, `open <file>.dmg` on macOS). The user completes it: accepts the license agreement, grants administrator rights and keeps the "AI Agents" components selected, which connect Mistika Workflows to Claude. Never run the installer silently or in unattended mode.
-- **Claude Desktop chat or Cowork**: give the user the links above. If you can open web pages in the user's browser, offer to open the page for them.
+  1. Download the installer for the user's system into their Downloads folder: `Invoke-WebRequest -Uri <url> -OutFile "$env:USERPROFILE\Downloads\<file>"` on Windows, `curl -fL -o ~/Downloads/<file> <url>` on macOS and Linux.
+  2. Check it before opening it:
+     - Windows: `Get-AuthenticodeSignature <file>` must report `Valid`, with a signer certificate for `SOLUCIONES GRAFICAS POR ORDENADOR SL`.
+     - macOS: mount it with `hdiutil attach -nobrowse -readonly <file>`, then `spctl --assess --type execute -vv "<installer>.app"` on the installer app inside the mounted volume must report `accepted`, `source=Notarized Developer ID` and `SOLUCIONES GRAFICAS POR ORDENADOR SL`.
+     - Linux: the `.run` installer is not signed; it is trusted because it comes from the address above over HTTPS. Make it executable with `chmod +x <file>`.
+
+     If a check fails, delete the file and tell the user not to run it.
+  3. Open the installer: `Start-Process <file>` on Windows, `open "<installer>.app"` on macOS, and on Linux ask the user to run `<file>` in their terminal (it may need `sudo` to install in `/opt`). The user completes it: accepts the license agreement, grants administrator rights and keeps the "AI Agents" components selected, which connect Mistika Workflows to Claude. Never run the installer silently or in unattended mode.
+- **Claude Desktop chat or Cowork**: give the user the installer link for their system and the license links above. If you can open web pages in the user's browser, offer to open them.
 
 After the installation:
 
