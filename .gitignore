@@ -1,0 +1,10 @@
+# Operating system files (the plugin directory rejects them)
+.DS_Store
+Thumbs.db
+desktop.ini
+__MACOSX/
+
+# Editor backups
+*~
+*.bak
+*.swp

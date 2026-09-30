@@ -1,0 +1,13 @@
+{
+  "name": "mistika-workflows",
+  "displayName": "Mistika Workflows",
+  "version": "0.1.0",
+  "description": "Install Mistika Workflows and connect it to Claude, so Claude can build and run your media workflows.",
+  "author": {
+    "name": "SGO",
+    "url": "https://www.sgo.es"
+  },
+  "homepage": "https://www.sgo.es/mistika-workflows/",
+  "repository": "https://github.com/madcodingrocks/claude-plugins",
+  "keywords": ["mistika", "workflows", "media", "video", "transcoding", "automation", "mcp"]
+}

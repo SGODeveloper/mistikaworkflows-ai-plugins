@@ -1,0 +1,17 @@
+{
+  "name": "sgo",
+  "owner": {
+    "name": "SGO",
+    "url": "https://www.sgo.es"
+  },
+  "description": "SGO plugin marketplace for Claude: Mistika Workflows and other SGO tools, with skills that help you install, set up and use them from Claude.",
+  "plugins": [
+    {
+      "name": "mistika-workflows",
+      "source": "./plugins/mistika-workflows",
+      "description": "Install Mistika Workflows and connect it to Claude, so Claude can build and run your media workflows.",
+      "category": "media",
+      "tags": ["mistika", "workflows", "media", "video", "transcoding", "automation"]
+    }
+  ]
+}
