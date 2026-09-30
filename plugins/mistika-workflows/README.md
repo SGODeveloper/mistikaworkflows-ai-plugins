@@ -39,17 +39,14 @@ Requirements: Mistika Workflows 11.7 or later. The Mistika Workflows tools work 
 
 ## How it works
 
-Mistika Workflows 11.7 and later include an MCP server, `workflowsMcpServer`. The Mistika Workflows installer installs it and connects it to the AI apps it finds on the computer, Claude Desktop included. This plugin adds a get-started skill that helps Claude to:
+Mistika Workflows 11.7 and later include an MCP server, `workflowsMcpServer`. The Mistika Workflows installer installs it and connects it to the AI apps it finds on the computer, Claude Desktop included. This plugin adds two skills:
 
-- tell you what Mistika Workflows can do for your media tasks;
-- check whether Mistika Workflows is installed and connected to Claude;
-- help you install it when it is missing: the free trial or a subscription, the installer for your operating system and the steps after installing;
-- connect an existing installation to Claude Desktop or Claude Code when its tools do not show up;
-- troubleshoot a connection that fails.
+- **`media-tasks`**: when you ask for a media task, such as a transcode, proxies, a metadata report, a color pipeline, AI dubbing or transcription, a quality check or a delivery, Claude does it with Mistika Workflows. If Mistika Workflows is not connected yet, Claude tells you once what it would take, and helps you another way if you prefer. It also answers what Mistika Workflows can do.
+- **`get-started`**: installs and connects Mistika Workflows step by step. Claude checks whether it is installed and connected, helps you get the free trial or a subscription and the installer for your operating system, connects an existing installation to Claude Desktop or Claude Code, and troubleshoots a connection that fails.
 
 ## What this plugin runs, sends and fetches
 
-The plugin contains instructions only (one skill). It runs no code when it is installed and it sends no data anywhere.
+The plugin contains instructions only (two skills). It runs no code when it is installed and it sends no data anywhere.
 
 When you ask Claude to install or connect Mistika Workflows, Claude may, with your confirmation and only where it can run commands on your computer (Claude Code):
 

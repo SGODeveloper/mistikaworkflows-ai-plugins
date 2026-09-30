@@ -1,33 +1,13 @@
 ---
 name: get-started
-description: Get Mistika Workflows working with Claude, so Claude can transcode, make proxies, manage metadata, apply color pipelines, dub and transcribe with AI, check quality and deliver media for the user, on their own computer. Use when the user asks what Mistika Workflows can do, wants to use it but its tools (names starting with workflows_) are not available, asks how to get, install, update or license it, or when its connection to Claude fails.
+description: Install Mistika Workflows and connect it to Claude step by step, from the 30-day free trial or a license to the installer for your system and the connection to Claude Desktop or Claude Code. Use it when someone wants to install, update or license Mistika Workflows, agreed to set it up for a media task, has it installed but its tools are not available, or when its connection to Claude fails.
 ---
 
 # Get started with Mistika Workflows
 
 Mistika Workflows is SGO's node-based media automation application, for Windows, macOS and Linux. Version 11.7 and later include an MCP server, `workflowsMcpServer` (server name `workflowsMcp`), that gives Claude tools whose names start with `workflows_`: with them Claude builds, configures and runs workflows and templates in the user's own installation. The Mistika Workflows installer installs that server and registers it in the AI apps it finds on the computer, Claude Desktop included (the "AI Agents" components of the installer).
 
-This skill answers what Mistika Workflows can do, and takes the user from "no Mistika Workflows tools" to "tools available". It does not cover using the tools: once they are available, the server's own instructions and `workflows_getting_started` do.
-
-## What Mistika Workflows can do
-
-Use this list to answer "what can Mistika Workflows do?" and to show users what they get before they install it. It comes from the nodes and templates that ship with Mistika Workflows:
-
-- **Transcoding and proxies**: ProRes on Windows, macOS and Linux, DNxHD and DNxHR (OP-Atom included), XAVC, XDCAM, GPU-accelerated H.264 and H.265, OpenEXR in ACES AP0, camera RAW sources, Dolby Vision to SDR, plus resolution changes, trims and watermarks.
-- **Deliveries and transfers**: Aspera, Signiant Media Shuttle, MASV, FileMail, FTP, AWS S3, Azure, Google Drive, OneDrive, Dropbox, Object Matrix, Frame.io, PIX, MediaSilo, YouTube and Vimeo, and AS-11 and DCP deliverables.
-- **Notifications**: email (Gmail included), Slack, Microsoft Teams, Discord and WhatsApp.
-- **Metadata and file management**: metadata reports to CSV, ALE and Excel; files sorted by metadata, extension, size, age or aspect ratio; checksums; copies, moves and renames with naming conventions built from metadata tokens.
-- **Color**: ACES workflows, CDLs, 3D LUTs and color space transformations.
-- **VFX pulls**: EDLs to markers and CC files, EXR plates, reference movies and ShotGrid publishing.
-- **Quality control and audio**: automated QC with Pulsar and Qscan, and loudness measurement with Youlean.
-- **AI**: dubbing, text to speech and speech to speech with ElevenLabs, transcription with Amberscript, and image enhancement with Pixell AI.
-- **Your own logic**: Python nodes and reusable templates, which the team can also launch from the Workflows Runner.
-
-Be accurate when you describe it:
-
-- The services of other companies (ElevenLabs, Amberscript, Pixell AI, Pulsar, Qscan and the cloud storage and delivery services) need the user's own account with them.
-- Everything runs in the user's installation, on their computer: the media is processed locally.
-- Once the tools are available, check the exact nodes with `workflows_node_catalog` and the templates with `workflows_v2_listTemplates` before promising a specific one.
+This skill takes the user from "no Mistika Workflows tools" to "tools available". What Mistika Workflows can do, and how to go about a media task, is in the `media-tasks` skill of this plugin. Using the tools is covered by the server's own instructions and `workflows_getting_started`.
 
 ## 1. Check the connection first
 
