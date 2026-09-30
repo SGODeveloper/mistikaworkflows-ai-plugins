@@ -57,13 +57,15 @@ Do this only when the user wants it. First tell the user:
 - Mistika Workflows needs a license: the [30-day free trial](https://www.sgo.es/checkout/?add-to-cart=198766) or a [subscription or license](https://www.sgo.es/mistika-workflows-plans/).
 - The installer for their operating system is on the [Mistika Workflows page](https://www.sgo.es/mistika-workflows/).
 
-<!-- TODO(sgo): when the stable "latest installer" URL of each operating system is published, list it here (Windows, macOS, Linux) and use it in the download step below. -->
+<!-- TODO(sgo): when the stable "latest installer" URL of each operating system is published, list it here (Windows, macOS, Linux) and let Claude Code download the installer from it directly, with the signature check below. -->
+
+The user downloads the installer from those pages. Do not look for installer files elsewhere on sgo.es or on other sites, and do not download one yourself.
 
 How to proceed depends on where you run:
 
 - **Claude Code**, with the user's confirmation:
-  1. Download the installer for the user's operating system from sgo.es.
-  2. Check its signature before opening it. On Windows, `Get-AuthenticodeSignature <file>` must report `Valid`, signed by `SOLUCIONES GRAFICAS POR ORDENADOR SL`. On macOS, `spctl --assess --type open --context context:primary-signature -v <file>.dmg` must report `accepted` and `Notarized Developer ID`. If the check fails, delete the file and tell the user.
+  1. Open the page in the user's default browser: `Start-Process "<url>"` on Windows, `open "<url>"` on macOS, `xdg-open "<url>"` on Linux.
+  2. When the user has downloaded the installer, ask for its path and check its signature before opening it. On Windows, `Get-AuthenticodeSignature <file>` must report `Valid`, signed by `SOLUCIONES GRAFICAS POR ORDENADOR SL`. On macOS, `spctl --assess --type open --context context:primary-signature -v <file>.dmg` must report `accepted` and `Notarized Developer ID`. If the check fails, tell the user not to run it.
   3. Open the installer (`Start-Process <file>` on Windows, `open <file>.dmg` on macOS). The user completes it: accepts the license agreement, grants administrator rights and keeps the "AI Agents" components selected, which connect Mistika Workflows to Claude. Never run the installer silently or in unattended mode.
 - **Claude Desktop chat or Cowork**: give the user the links above. If you can open web pages in the user's browser, offer to open the page for them.
 
