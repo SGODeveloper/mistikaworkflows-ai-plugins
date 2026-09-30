@@ -35,3 +35,7 @@ This plugin collects no data. Mistika Workflows and the sgo.es website are cover
 ## Support
 
 Visit [SGO support](https://support.sgo.es) or the [Mistika Workflows page](https://www.sgo.es/mistika-workflows/).
+
+## License
+
+This plugin is released under the [Apache License 2.0](LICENSE); see also [NOTICE](NOTICE). The license covers the contents of this plugin only. It does not cover Mistika Workflows, which has its own license agreement, or the SGO and Mistika names and logos.

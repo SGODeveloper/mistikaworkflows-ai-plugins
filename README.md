@@ -27,3 +27,7 @@ In Claude Code:
 ## Privacy
 
 The plugins in this marketplace collect no data. SGO products and websites are covered by the [SGO privacy policy](https://www.sgo.es/privacy-policy-statement/).
+
+## License
+
+The contents of this repository are released under the [Apache License 2.0](LICENSE); see also [NOTICE](NOTICE). The license does not cover SGO products, which have their own license agreements, or the SGO and Mistika names and logos.
