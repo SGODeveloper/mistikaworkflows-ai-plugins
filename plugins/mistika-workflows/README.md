@@ -1,20 +1,42 @@
 # Mistika Workflows for Claude
 
-[Mistika Workflows](https://www.sgo.es/mistika-workflows/) is SGO's node-based automation tool for media: transcoding and encoding, clip metadata, file operations, deliveries and transfers, notifications, QC and AI nodes. It runs on Windows, macOS and Linux.
+**Let Claude handle your media tasks.** Transcoding, proxies, metadata, deliveries and notifications: describe what you need, and Claude builds and runs it with [Mistika Workflows](https://www.sgo.es/mistika-workflows/), SGO's media automation software, on your own computer.
 
-Mistika Workflows 11.7 and later include an MCP server, `workflowsMcpServer`. The Mistika Workflows installer installs it and connects it to the AI apps it finds on the computer, Claude Desktop included. Through it, Claude can build, configure and run workflows and templates in your own Mistika Workflows installation.
+## What you can ask for
 
-This plugin gets you there. Its skill helps Claude to:
+- "Transcode every .mov in D:/rushes to ProRes 422 HQ and put the results in D:/masters."
+- "Make H.264 proxies of today's footage and email me when they are done."
+- "Upload the finished masters to our Aspera server and post a message in Slack."
+- "Export the frame rate and resolution of these clips to a CSV file."
+- "Run my 'Social deliveries' template on this folder."
+- "Build a workflow for this delivery and save it as a template, so I can reuse it."
+
+Claude picks the right nodes, connects them, checks that the workflow is valid, runs it and tells you what it produced. When a value is missing, such as a destination or a login, Claude asks you instead of guessing.
+
+## Why Mistika Workflows
+
+- **Production-quality processing.** ProRes on Windows, macOS and Linux, GPU-accelerated H.264 and H.265, OpenEXR and camera RAW, with color management and metadata preserved.
+- **Your media stays on your computer.** The files are processed locally by Mistika Workflows; Claude works with the workflow, the file names and the results.
+- **Nothing hidden.** Open Mistika Workflows to watch the workflows Claude builds, adjust them by hand and reuse them. Every run goes through the task queue, with its log.
+- **More than transcoding.** Around 250 nodes: deliveries to Aspera, Signiant, Frame.io, Dropbox, AWS, YouTube, Vimeo and ShotGrid, email and Slack notifications, metadata and CDL handling, quality checks, AI nodes and your own Python nodes.
+- **Your templates, your way.** Claude can start from the templates you already use, or save the workflows it builds as new templates.
+
+## Get started
+
+1. Install this plugin.
+2. Ask Claude: "Set up Mistika Workflows." If you do not have it yet, Claude helps you get the [30-day free trial](https://www.sgo.es/checkout/?add-to-cart=198766) or a [subscription](https://www.sgo.es/mistika-workflows-plans/) and install it.
+3. Restart Claude and ask for your first task.
+
+Requirements: Mistika Workflows 11.7 or later. The Mistika Workflows tools work in Claude Desktop (chat and Cowork) on Windows and macOS, and in Claude Code on Windows, macOS and Linux. They are not available in Claude on the web or on mobile, because Mistika Workflows runs on your computer.
+
+## How it works
+
+Mistika Workflows 11.7 and later include an MCP server, `workflowsMcpServer`. The Mistika Workflows installer installs it and connects it to the AI apps it finds on the computer, Claude Desktop included. This plugin adds a setup skill that helps Claude to:
 
 - check whether Mistika Workflows is installed and connected to Claude;
-- help you install it when it is missing: the 30-day free trial or a subscription, the installer for your operating system and the steps after installing;
+- help you install it when it is missing: the free trial or a subscription, the installer for your operating system and the steps after installing;
 - connect an existing installation to Claude Desktop or Claude Code when its tools do not show up;
 - troubleshoot a connection that fails.
-
-## Requirements
-
-- Mistika Workflows 11.7 or later, with an evaluation or a purchased license.
-- The Mistika Workflows tools are available in Claude Desktop (chat and Cowork) and in Claude Code. They are not available in Claude on the web or on mobile, because the MCP server runs on your computer.
 
 ## What this plugin runs, sends and fetches
 

@@ -4,14 +4,26 @@
     "name": "SGO",
     "url": "https://www.sgo.es"
   },
-  "description": "SGO plugin marketplace for Claude: Mistika Workflows and other SGO tools, with skills that help you install, set up and use them from Claude.",
+  "description": "SGO plugins for Claude: put Mistika Workflows and other SGO tools to work for you, straight from a conversation.",
   "plugins": [
     {
       "name": "mistika-workflows",
       "source": "./plugins/mistika-workflows",
-      "description": "Install Mistika Workflows and connect it to Claude, so Claude can build and run your media workflows.",
+      "description": "Let Claude handle your media tasks: transcoding, proxies, metadata, deliveries and notifications, built and run with Mistika Workflows on your own computer.",
       "category": "media",
-      "tags": ["mistika", "workflows", "media", "video", "transcoding", "automation"]
+      "tags": [
+        "mistika",
+        "workflows",
+        "media",
+        "video",
+        "transcoding",
+        "proxies",
+        "metadata",
+        "delivery",
+        "prores",
+        "automation",
+        "sgo"
+      ]
     }
   ]
 }

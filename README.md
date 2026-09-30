@@ -1,21 +1,21 @@
 # SGO plugins for Claude
 
-The SGO plugin marketplace for Claude: Mistika Workflows and other SGO tools, with skills that help you install, set up and use them from Claude.
+Put SGO tools to work for you, straight from a conversation with Claude. Start with Mistika Workflows: describe the media task you need, such as a transcode, proxies, a metadata report or a delivery, and Claude builds and runs it on your own computer.
 
 ## Plugins
 
 | Plugin | What it does |
 | --- | --- |
-| [`mistika-workflows`](plugins/mistika-workflows) | Install Mistika Workflows and connect it to Claude, so Claude can build and run your media workflows. |
+| [`mistika-workflows`](plugins/mistika-workflows) | Let Claude handle your media tasks: transcoding, proxies, metadata, deliveries and notifications, built and run with Mistika Workflows on your own computer. |
 
 ## Install
 
-In Claude (web, desktop or Cowork), open **Customize > Plugins**, add this marketplace (`madcodingrocks/claude-plugins`) and install the plugin you need.
+In Claude (web, desktop or Cowork), open **Customize > Plugins**, add this marketplace (`SGODeveloper/claude-plugins`) and install the plugin you need.
 
 In Claude Code:
 
 ```
-/plugin marketplace add madcodingrocks/claude-plugins
+/plugin marketplace add SGODeveloper/claude-plugins
 /plugin install mistika-workflows@sgo
 ```
 
