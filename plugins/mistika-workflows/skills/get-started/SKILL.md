@@ -54,7 +54,7 @@ Then:
 
 Do this only when the user wants it. First tell the user that Mistika Workflows needs a license, and that they get it on the [Workflows Creator plans page](https://www.sgo.es/workflows-creator-plans/):
 
-- **The 30-day evaluation is free**: free for the whole evaluation period, with no credit card or payment needed to get it. It is the way to start.
+- **The 30-day evaluation is free**: free for the whole evaluation period, with no credit card or payment needed to get it. It is the way to start. On the page, the user chooses **30-Day Trial**, not the paid 30-day license.
 - Subscriptions and licenses are on the same page. Do not quote prices or terms: send the user to the page.
 
 The installer always gets the latest version:
@@ -83,7 +83,7 @@ How to proceed depends on where you run:
 After the installation:
 
 1. **In Claude Code, register the server now.** The installer registers Mistika Workflows in Claude Desktop and the other AI apps it finds, but not in Claude Code. Run the Claude Code command of step 4 before the user restarts anything.
-2. The user starts Mistika Workflows once and activates the license they got on the [plans page](https://www.sgo.es/workflows-creator-plans/). If they do not have one yet, send them there for the free evaluation.
+2. The user starts Mistika Workflows once and activates the license they got on the [plans page](https://www.sgo.es/workflows-creator-plans/). If they do not have one yet, send them there for the free evaluation (**30-Day Trial**).
 3. The user quits Claude Desktop completely and opens it again (closing the window is not enough), or starts a new Claude Code session, so Claude loads the MCP server.
 4. Check for the `workflows_` tools again (step 1). If they are still missing, go to step 5. If they are available, the setup is done: tell the user to ask for their task (in Claude Code, in the new session). Do not plan the task during the setup.
 

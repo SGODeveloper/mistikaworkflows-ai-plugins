@@ -32,7 +32,7 @@ Services from other companies, such as ElevenLabs, Amberscript, Pixell AI, QC to
 ## Get started
 
 1. Install this plugin.
-2. Ask Claude: "Set up Mistika Workflows." If you do not have it yet, Claude helps you install it and get a license on the [Workflows Creator plans page](https://www.sgo.es/workflows-creator-plans/): the 30-day evaluation is free and needs no credit card.
+2. Ask Claude: "Set up Mistika Workflows." If you do not have it yet, Claude helps you install it and get a license on the [Workflows Creator plans page](https://www.sgo.es/workflows-creator-plans/): the 30-day evaluation is free, includes every feature and needs no credit card.
 3. Restart Claude and ask for your first task.
 
 Requirements: Mistika Workflows 11.7 or later. The Mistika Workflows tools work in Claude Desktop (chat and Cowork) on Windows and macOS, and in Claude Code on Windows, macOS and Linux. They are not available in Claude on the web or on mobile, because Mistika Workflows runs on your computer.
