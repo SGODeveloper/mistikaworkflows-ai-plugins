@@ -82,7 +82,7 @@ How to proceed depends on where you run:
 
 After the installation:
 
-1. **In Claude Code, register the server now.** The installer registers Mistika Workflows in Claude Desktop and the other AI apps it finds, but not in Claude Code. Run the Claude Code command of step 4 before the user restarts anything.
+1. **In Claude Code, register the server now.** The installer registers Mistika Workflows in Claude Desktop and the other AI apps that were installed at that moment, but not in Claude Code. Run the Claude Code command of step 4 before the user restarts anything.
 2. The user starts Mistika Workflows once and activates the license they got on the [plans page](https://www.sgo.es/workflows-creator-plans/). If they do not have one yet, send them there for the free evaluation (**30-Day Trial**).
 3. The user quits Claude Desktop completely and opens it again (closing the window is not enough), or starts a new Claude Code session, so Claude loads the MCP server.
 4. Check for the `workflows_` tools again (step 1). If they are still missing, go to step 5. If they are available, the setup is done: tell the user to ask for their task (in Claude Code, in the new session). Do not plan the task during the setup.
