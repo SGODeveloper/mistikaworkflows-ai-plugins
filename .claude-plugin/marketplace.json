@@ -9,7 +9,7 @@
     {
       "name": "mistika-workflows",
       "source": "./plugins/mistika-workflows",
-      "description": "Let Claude handle your media tasks: transcodes, proxies, metadata, color, AI dubbing and transcription, QC and deliveries, built and run with Mistika Workflows on your own computer.",
+      "description": "Let Claude handle your media tasks: transcodes and proxies, color, metadata, VFX pulls, AI dubbing and transcription, QC, deliveries and watch folders, built and run with Mistika Workflows on your own computer.",
       "category": "media",
       "tags": [
         "mistika",
@@ -26,7 +26,12 @@
         "color",
         "qc",
         "dubbing",
-        "transcription"
+        "transcription",
+        "vfx",
+        "aces",
+        "camera-raw",
+        "dailies",
+        "post-production"
       ]
     }
   ]
