@@ -1,7 +1,7 @@
 {
   "name": "mistika-workflows",
   "displayName": "Mistika Workflows",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Let Claude handle your media tasks: transcodes, proxies, metadata, color, AI dubbing and transcription, QC and deliveries, built and run with Mistika Workflows on your own computer.",
   "author": {
     "name": "SGO",

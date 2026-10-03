@@ -1,6 +1,6 @@
 ---
 name: get-started
-description: Install Mistika Workflows and connect it to Claude step by step, from the 30-day free trial or a license to the installer for your system and the connection to Claude Desktop or Claude Code. Use it when someone wants to install, update or license Mistika Workflows, agreed to set it up for a media task, has it installed but its tools are not available, or when its connection to Claude fails.
+description: Install Mistika Workflows and connect it to Claude step by step, from the free evaluation license to the installer for your system and the connection to Claude Desktop or Claude Code. Use it when someone wants to install, update or license Mistika Workflows, agreed to set it up for a media task, has it installed but its tools are not available, or when its connection to Claude fails.
 ---
 
 # Get started with Mistika Workflows
@@ -52,7 +52,12 @@ Then:
 
 ## 3. Install or update Mistika Workflows
 
-Do this only when the user wants it. First tell the user that Mistika Workflows needs a license: the [30-day free trial](https://www.sgo.es/checkout/?add-to-cart=198766) or a [subscription or license](https://www.sgo.es/mistika-workflows-plans/). The installer always gets the latest version:
+Do this only when the user wants it. First tell the user that Mistika Workflows needs a license, and that they get it on the [Workflows Creator plans page](https://www.sgo.es/workflows-creator-plans/):
+
+- **The 30-day evaluation is free**: free for the whole evaluation period, with no credit card or payment needed to get it. It is the way to start.
+- Subscriptions and licenses are on the same page. Do not quote prices or terms: send the user to the page.
+
+The installer always gets the latest version:
 
 | System | Installer |
 | --- | --- |
@@ -73,14 +78,14 @@ How to proceed depends on where you run:
 
      If a check fails, delete the file and tell the user not to run it.
   3. Open the installer: `Start-Process <file>` on Windows, `open "<installer>.app"` on macOS, and on Linux ask the user to run `<file>` in their terminal (it may need `sudo` to install in `/opt`). The user completes it: accepts the license agreement, grants administrator rights and keeps the "AI Agents" components selected, which connect Mistika Workflows to Claude. Never run the installer silently or in unattended mode.
-- **Claude Desktop chat or Cowork**: give the user the installer link for their system and the license links above. If you can open web pages in the user's browser, offer to open them.
+- **Claude Desktop chat or Cowork**: give the user the installer link for their system and the plans page. If you can open web pages in the user's browser, offer to open them.
 
 After the installation:
 
 1. **In Claude Code, register the server now.** The installer registers Mistika Workflows in Claude Desktop and the other AI apps it finds, but not in Claude Code. Run the Claude Code command of step 4 before the user restarts anything.
-2. The user starts Mistika Workflows once to activate the license (trial or purchase).
+2. The user starts Mistika Workflows once and activates the license they got on the [plans page](https://www.sgo.es/workflows-creator-plans/). If they do not have one yet, send them there for the free evaluation.
 3. The user quits Claude Desktop completely and opens it again (closing the window is not enough), or starts a new Claude Code session, so Claude loads the MCP server.
-4. Check for the `workflows_` tools again (step 1). If they are still missing, go to step 5.
+4. Check for the `workflows_` tools again (step 1). If they are still missing, go to step 5. If they are available, the setup is done: tell the user to ask for their task (in Claude Code, in the new session). Do not plan the task during the setup.
 
 ## 4. Connect an existing installation
 
@@ -102,10 +107,12 @@ Find the cause before you name it. Check what you can (step 2, the Claude Code s
   - The installed version is older than 11.7: update it (step 3).
 - **Claude Desktop shows `workflowsMcp` as failed** (Settings > Developer): read its log, `mcp-server-workflowsMcp.log`, where you can, or ask the user for it. On Windows it is in `%LOCALAPPDATA%\Packages\Claude_*\LocalCache\Roaming\Claude\logs\` for the current Claude Desktop, or in `%APPDATA%\Claude\logs\` for older installations: use the folder whose files changed most recently. On macOS it is in `~/Library/Logs/Claude/`.
 - **The tools are there but every call fails with a connection error**: Mistika Workflows is not running. Follow the server's instructions: `workflows_launch_application`, then `workflows_wait_for_application_ready`.
-- **Mistika Workflows reports a license problem**: the user activates or renews the license in Mistika Workflows, or gets one from the [plans page](https://www.sgo.es/mistika-workflows-plans/).
+- **Mistika Workflows reports a license problem**: the user activates or renews the license in Mistika Workflows, or gets one from the [plans page](https://www.sgo.es/workflows-creator-plans/), where the evaluation is free.
 
 ## Rules
 
+- Stay on the setup: install, license and connect Mistika Workflows, and give product facts from the `media-tasks` skill when the user asks. Do not plan how the user's task will be done or promise features (schedules, automations, specific nodes or presets) until the tools are connected and show what is possible.
+- Say about licenses only what this skill says. For prices, terms and anything else, send the user to the plans page.
 - Download Mistika Workflows only from sgo.es.
 - Install, update or change any configuration only when the user asks for it or agrees. Tell the user what each command does before you run it.
 - Never ask for license keys, passwords or payment details in the conversation: the user enters them in Mistika Workflows or on sgo.es.

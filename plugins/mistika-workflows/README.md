@@ -32,7 +32,7 @@ Services from other companies, such as ElevenLabs, Amberscript, Pixell AI, QC to
 ## Get started
 
 1. Install this plugin.
-2. Ask Claude: "Set up Mistika Workflows." If you do not have it yet, Claude helps you get the [30-day free trial](https://www.sgo.es/checkout/?add-to-cart=198766) or a [subscription](https://www.sgo.es/mistika-workflows-plans/) and install it.
+2. Ask Claude: "Set up Mistika Workflows." If you do not have it yet, Claude helps you install it and get a license on the [Workflows Creator plans page](https://www.sgo.es/workflows-creator-plans/): the 30-day evaluation is free and needs no credit card.
 3. Restart Claude and ask for your first task.
 
 Requirements: Mistika Workflows 11.7 or later. The Mistika Workflows tools work in Claude Desktop (chat and Cowork) on Windows and macOS, and in Claude Code on Windows, macOS and Linux. They are not available in Claude on the web or on mobile, because Mistika Workflows runs on your computer.
@@ -42,7 +42,7 @@ Requirements: Mistika Workflows 11.7 or later. The Mistika Workflows tools work 
 Mistika Workflows 11.7 and later include an MCP server, `workflowsMcpServer`. The Mistika Workflows installer installs it and connects it to the AI apps it finds on the computer, Claude Desktop included. This plugin adds two skills:
 
 - **`media-tasks`**: when you ask for a media task, such as a transcode, proxies, a metadata report, a color pipeline, AI dubbing or transcription, a quality check or a delivery, Claude does it with Mistika Workflows. If Mistika Workflows is not connected yet, Claude tells you once what it would take, and helps you another way if you prefer. It also answers what Mistika Workflows can do.
-- **`get-started`**: installs and connects Mistika Workflows step by step. Claude checks whether it is installed and connected, helps you get the free trial or a subscription and the installer for your operating system, connects an existing installation to Claude Desktop or Claude Code, and troubleshoots a connection that fails.
+- **`get-started`**: installs and connects Mistika Workflows step by step. Claude checks whether it is installed and connected, helps you get a license (the evaluation is free) and the installer for your operating system, connects an existing installation to Claude Desktop or Claude Code, and troubleshoots a connection that fails.
 
 ## What this plugin runs, sends and fetches
 
