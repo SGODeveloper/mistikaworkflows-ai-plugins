@@ -77,22 +77,30 @@ How to proceed depends on where you run:
 
 After the installation:
 
-1. The user starts Mistika Workflows once to activate the license (trial or purchase).
-2. The user quits Claude Desktop completely and opens it again (closing the window is not enough), or starts a new Claude Code session, so Claude loads the MCP server.
-3. Check for the `workflows_` tools again (step 1). If they are still missing, go to step 4: for example, Claude may have been installed after Mistika Workflows, so the installer did not find it.
+1. **In Claude Code, register the server now.** The installer registers Mistika Workflows in Claude Desktop and the other AI apps it finds, but not in Claude Code. Run the Claude Code command of step 4 before the user restarts anything.
+2. The user starts Mistika Workflows once to activate the license (trial or purchase).
+3. The user quits Claude Desktop completely and opens it again (closing the window is not enough), or starts a new Claude Code session, so Claude loads the MCP server.
+4. Check for the `workflows_` tools again (step 1). If they are still missing, go to step 5.
 
 ## 4. Connect an existing installation
 
 `<server>` is the full path of the MCP server executable found in step 2.
 
 - **Claude Desktop (chat and Cowork)**: run `"<server>" --register-client claude`. It adds the `workflowsMcp` entry to Claude Desktop's configuration, keeps the rest of the configuration, and prints one line of JSON with the result. Then the user quits Claude Desktop completely and opens it again. `"<server>" --list-clients` lists the other AI apps the same command can register.
-- **Claude Code**: run `claude mcp add workflowsMcp --scope user -e WORKFLOWS_MCP_TRANSPORT=stdio -- "<server>"`, check it with `claude mcp list` and start a new session. Keep `WORKFLOWS_MCP_TRANSPORT=stdio`: without it the server starts in HTTP mode and Claude Code cannot talk to it.
+- **Claude Code**: run `claude mcp add workflowsMcp --scope user -e WORKFLOWS_MCP_TRANSPORT=stdio -- "<server>"`, check it with `claude mcp list` and start a new session. Keep `WORKFLOWS_MCP_TRANSPORT=stdio`: without it the server starts in HTTP mode and Claude Code cannot talk to it. In PowerShell, write the separator as `"--"`, with the quotes, so PowerShell passes it on to `claude`.
 
 Where you cannot run commands, give the user the exact command for their system and tell them to run it in a terminal (Command Prompt or PowerShell on Windows, Terminal on macOS).
 
 ## 5. When the server does not connect
 
-- **Claude Desktop shows `workflowsMcp` as failed**: its log is `mcp-server-workflowsMcp.log`, in `%APPDATA%\Claude\logs\` on Windows and in `~/Library/Logs/Claude/` on macOS. Read it where you can, or ask the user for it.
+Find the cause before you name it. Check what you can (step 2, the Claude Code server list, the log); where you cannot check, tell the user the likely causes and the step that fixes each, instead of stating one as fact.
+
+- **Mistika Workflows is installed but the tools do not appear after restarting.** Likely causes, in order:
+  - Claude was not completely quit: on Windows, closing the window leaves it running next to the clock; on macOS, closing the window does not quit it either. The user quits it from there and opens it again.
+  - The server was never registered in this Claude app: Claude was installed after Mistika Workflows, the installer did not find it, or this is Claude Code. Register it (step 4).
+  - The MCP server executable is missing because the "AI Agents" or MCP components were deselected: run the installer again with them selected.
+  - The installed version is older than 11.7: update it (step 3).
+- **Claude Desktop shows `workflowsMcp` as failed** (Settings > Developer): read its log, `mcp-server-workflowsMcp.log`, where you can, or ask the user for it. On Windows it is in `%LOCALAPPDATA%\Packages\Claude_*\LocalCache\Roaming\Claude\logs\` for the current Claude Desktop, or in `%APPDATA%\Claude\logs\` for older installations: use the folder whose files changed most recently. On macOS it is in `~/Library/Logs/Claude/`.
 - **The tools are there but every call fails with a connection error**: Mistika Workflows is not running. Follow the server's instructions: `workflows_launch_application`, then `workflows_wait_for_application_ready`.
 - **Mistika Workflows reports a license problem**: the user activates or renews the license in Mistika Workflows, or gets one from the [plans page](https://www.sgo.es/mistika-workflows-plans/).
 
