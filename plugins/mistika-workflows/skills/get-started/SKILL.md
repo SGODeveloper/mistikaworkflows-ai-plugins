@@ -1,25 +1,35 @@
 ---
 name: get-started
-description: Install Mistika Workflows and connect it to Claude step by step, from the free evaluation license to the installer for your system and the connection to Claude Desktop or Claude Code. Use it when someone wants to install, update or license Mistika Workflows, agreed to set it up for a media task, has it installed but its tools are not available, or when its connection to Claude fails.
+description: Install Mistika Workflows and connect it to your AI app step by step, from the evaluation license to the installer for your system and the connection to Claude Desktop, Claude Code, the ChatGPT desktop app or Codex. Use it when someone wants to install, update or license Mistika Workflows, agreed to set it up for a media task, has it installed but its tools are not available, or when its connection fails.
 ---
 
 # Get started with Mistika Workflows
 
-Mistika Workflows is SGO's node-based media automation application, for Windows, macOS and Linux. Version 11.7 and later include an MCP server, `workflowsMcpServer` (server name `workflowsMcp`), that gives Claude tools whose names start with `workflows_`: with them Claude builds, configures and runs workflows and templates in the user's own installation. The Mistika Workflows installer installs that server and registers it in the AI apps it finds on the computer, Claude Desktop included (the "AI Agents" components of the installer).
+Mistika Workflows is SGO's node-based media automation application, for Windows, macOS and Linux. Version 11.7 and later include an MCP server, `workflowsMcpServer` (server name `workflowsMcp`), that gives you tools whose names contain `workflows_`: with them you build, configure and run workflows and templates in the user's own installation. The Mistika Workflows installer installs that server and registers it in the AI apps it finds on the computer (the "AI Agents" components of the installer).
 
 This skill takes the user from "no Mistika Workflows tools" to "tools available". What Mistika Workflows can do, and how to go about a media task, is in the `media-tasks` skill of this plugin. Using the tools is covered by the server's own instructions and `workflows_getting_started`.
 
+## Apps that can use the tools
+
+The tools run on the user's computer, so only apps that run there and start local MCP servers can use them:
+
+| App | Where the connection is kept | Registered by the Mistika Workflows installer |
+| --- | --- | --- |
+| Claude Desktop (chat and Cowork) | Claude Desktop's configuration file | Yes, if Claude Desktop was already installed |
+| Claude Code | Claude Code's user configuration (`~/.claude.json`) | No: register it (step 4) |
+| ChatGPT desktop app and Codex (CLI and IDE extension) | `config.toml` in the Codex folder, shared by all of them: `~/.codex/config.toml` (`%USERPROFILE%\.codex\config.toml` on Windows), or the folder set in `CODEX_HOME` | Yes, if the ChatGPT desktop app or Codex was already installed |
+
+On the web or on mobile the tools cannot run: tell the user to use one of these apps on the computer where Mistika Workflows is installed.
+
 ## 1. Check the connection first
 
-If tools whose names start with `workflows_` are available, Mistika Workflows is already connected. Set nothing up: call `workflows_getting_started` and continue with the user's request.
-
-The tools run on the user's computer, so they are only available in Claude Desktop (chat and Cowork) and in Claude Code. In Claude on the web or on mobile, tell the user to use one of those on the computer where Mistika Workflows is installed.
+If tools whose names contain `workflows_` are available, Mistika Workflows is already connected. If your app keeps tools deferred or searchable, search for them before concluding they are missing. When they are available, set nothing up: call `workflows_getting_started` and continue with the user's request.
 
 Otherwise, find out why the tools are missing (step 2).
 
 ## 2. Find the installation
 
-Where you can run commands on the user's computer (Claude Code), check it yourself. Everywhere else, ask the user whether Mistika Workflows 11.7 or later is installed, and on which operating system.
+If you can run commands on the user's own computer, check it yourself. Commands that run in a cloud session, a container or a virtual machine (for example a cloud or Cowork sandbox) do not see the user's computer: there, as everywhere you cannot run commands, ask the user whether Mistika Workflows 11.7 or later is installed, and on which operating system.
 
 SGO installers record the installed products in `installation.xml`:
 
@@ -31,7 +41,7 @@ SGO installers record the installed products in `installation.xml`:
 
 In that file:
 
-- `/installation/paths/app` is the SGO Apps folder.
+- `/installation/paths/app` is the SGO Apps folder. By default it is `C:\Program Files\SGO Apps` on Windows, `/Applications/SGO Apps` on macOS and `/opt/SGO Apps` or `~/SGO Apps` on Linux.
 - The `version` attribute of `/installation/sw/workflows` is the installed Mistika Workflows version. It is empty when Mistika Workflows is not installed.
 
 The MCP server executable is in the SGO Apps folder:
@@ -48,7 +58,7 @@ Then:
 
 - No installation file, an empty version or no executable: Mistika Workflows is not installed. Go to step 3.
 - A version older than 11.7: that version has no MCP server. Offer to update it (step 3).
-- The executable exists: Mistika Workflows is installed but not connected to this Claude app. Go to step 4.
+- The executable exists: Mistika Workflows is installed but not connected to this app. Go to step 4.
 
 ## 3. Install or update Mistika Workflows
 
@@ -67,9 +77,9 @@ The installer always gets the latest version:
 
 Use only these addresses: do not look for installers anywhere else.
 
-How to proceed depends on where you run:
+How to proceed depends on what you can do:
 
-- **Claude Code**, with the user's confirmation:
+- **If you can run commands on the user's own computer** (for example in Claude Code or Codex), with the user's confirmation. Where commands run in a sandbox, such as Codex's, downloading, opening the installer and writing the app configuration need the user's approval to run outside it: ask for it.
   1. Download the installer for the user's system into their Downloads folder: `Invoke-WebRequest -Uri <url> -OutFile "$env:USERPROFILE\Downloads\<file>"` on Windows, `curl -fL -o ~/Downloads/<file> <url>` on macOS and Linux.
   2. Check it before opening it:
      - Windows: `Get-AuthenticodeSignature <file>` must report `Valid`, with a signer certificate for `SOLUCIONES GRAFICAS POR ORDENADOR SL`.
@@ -77,35 +87,49 @@ How to proceed depends on where you run:
      - Linux: the `.run` installer is not signed; it is trusted because it comes from the address above over HTTPS. Make it executable with `chmod +x <file>`.
 
      If a check fails, delete the file and tell the user not to run it.
-  3. Open the installer: `Start-Process <file>` on Windows, `open "<installer>.app"` on macOS, and on Linux ask the user to run `<file>` in their terminal (it may need `sudo` to install in `/opt`). The user completes it: accepts the license agreement, grants administrator rights and keeps the "AI Agents" components selected, which connect Mistika Workflows to Claude. Never run the installer silently or in unattended mode.
-- **Claude Desktop chat or Cowork**: give the user the installer link for their system and the plans page. If you can open web pages in the user's browser, offer to open them.
+  3. Open the installer: `Start-Process <file>` on Windows, `open "<installer>.app"` on macOS, and on Linux ask the user to run `<file>` in their terminal (it may need `sudo` to install in `/opt`). The user completes it: accepts the license agreement, grants administrator rights and keeps the "AI Agents" components selected, which connect Mistika Workflows to the AI apps on the computer. Never run the installer silently or in unattended mode.
+- **Otherwise** (for example in a Claude Desktop or ChatGPT chat): give the user the installer link for their system and the plans page. If you can open web pages in the user's browser, offer to open them.
 
 After the installation:
 
-1. **In Claude Code, register the server now.** The installer registers Mistika Workflows in Claude Desktop and the other AI apps that were installed at that moment, but not in Claude Code. Run the Claude Code command of step 4 before the user restarts anything.
+1. **Make sure the app you run in is registered.** The installer never registers Claude Code, and it registers the other apps only if they were installed before Mistika Workflows. If you can run commands on the user's computer, register your app now with its command of step 4, before the user restarts anything; it changes nothing when the installer already did it.
 2. The user starts Mistika Workflows once and activates the license they got on the [plans page](https://www.sgo.es/workflows-creator-plans/). If they do not have one yet, send them there for the free evaluation (**30-Day Trial**).
-3. The user quits Claude Desktop completely and opens it again (closing the window is not enough), or starts a new Claude Code session, so Claude loads the MCP server.
-4. Check for the `workflows_` tools again (step 1). If they are still missing, go to step 5. If they are available, the setup is done: tell the user to ask for their task (in Claude Code, in the new session). Do not plan the task during the setup.
+3. The user restarts the app so it loads the MCP server:
+   - Claude Desktop: quit it completely and open it again (closing the window is not enough).
+   - ChatGPT desktop app: select **Restart** in **Settings > MCP servers**, or quit the app completely and open it again; then start a new chat or task.
+   - Claude Code or Codex CLI: start a new session. Codex IDE extension: reload the editor window or start a new session.
+4. Check for the `workflows_` tools again (step 1). If they are still missing, go to step 5. If they are available, the setup is done: tell the user to ask for their task, in the new chat, task or session. Do not plan the task during the setup.
 
 ## 4. Connect an existing installation
 
 `<server>` is the full path of the MCP server executable found in step 2.
 
-- **Claude Desktop (chat and Cowork)**: run `"<server>" --register-client claude`. It adds the `workflowsMcp` entry to Claude Desktop's configuration, keeps the rest of the configuration, and prints one line of JSON with the result. Then the user quits Claude Desktop completely and opens it again. `"<server>" --list-clients` lists the other AI apps the same command can register.
-- **Claude Code**: run `claude mcp add workflowsMcp --scope user -e WORKFLOWS_MCP_TRANSPORT=stdio -- "<server>"`, check it with `claude mcp list` and start a new session. Keep `WORKFLOWS_MCP_TRANSPORT=stdio`: without it the server starts in HTTP mode and Claude Code cannot talk to it. In PowerShell, write the separator as `"--"`, with the quotes, so PowerShell passes it on to `claude`.
+| App | Command | Then |
+| --- | --- | --- |
+| Claude Desktop (chat and Cowork) | `"<server>" --register-client claude` | The user quits Claude Desktop completely and opens it again. |
+| ChatGPT desktop app and Codex | `"<server>" --register-client chatgpt` | Check it with `codex mcp get workflowsMcp` where the Codex CLI is installed. The user selects **Restart** in **Settings > MCP servers** of the ChatGPT desktop app, or starts a new Codex session. |
+| Claude Code | `claude mcp add workflowsMcp --scope user -e WORKFLOWS_MCP_TRANSPORT=stdio -- "<server>"` | Check it with `claude mcp list` and start a new session. |
 
-Where you cannot run commands, give the user the exact command for their system and tell them to run it in a terminal (Command Prompt or PowerShell on Windows, Terminal on macOS).
+- `--register-client` adds the `workflowsMcp` entry to the app's configuration and keeps the rest of the configuration. For the ChatGPT desktop app and Codex it writes the Codex `config.toml`, with a tool timeout of 600 seconds so that calls can wait for a workflow. `"<server>" --list-clients` lists the other AI apps the same command can register.
+- It prints one line of JSON. `action` is `registered`, `updated` or `unchanged` when the app is connected; `skipped` when the app is not installed for this user; `notManaged` when a `workflowsMcp` entry that points elsewhere (for example a URL) exists and was left as it is; `error` when the file could not be read or edited, also left as it is (`message` says why). `targets` lists each configuration file it wrote.
+- In PowerShell, start a command that begins with a quoted path with the call operator: `& "<server>" --register-client claude`. For `claude mcp add`, write the separator as `"--"`, with the quotes, so PowerShell passes it on to `claude`.
+- Claude Code: keep `WORKFLOWS_MCP_TRANSPORT=stdio`; without it the server starts in HTTP mode and Claude Code cannot talk to it.
+
+Where you cannot run commands, give the user the exact command for their system, with the path of `<server>` (by default in the SGO Apps folder of step 2), and tell them to run it in a terminal: Command Prompt or PowerShell on Windows, Terminal on macOS and Linux.
 
 ## 5. When the server does not connect
 
-Find the cause before you name it. Check what you can (step 2, the Claude Code server list, the log); where you cannot check, tell the user the likely causes and the step that fixes each, instead of stating one as fact.
+Find the cause before you name it. Check what you can (step 2, the app's server list, the log); where you cannot check, tell the user the likely causes and the step that fixes each, instead of stating one as fact.
 
 - **Mistika Workflows is installed but the tools do not appear after restarting.** Likely causes, in order:
-  - Claude was not completely quit: on Windows, closing the window leaves it running next to the clock; on macOS, closing the window does not quit it either. The user quits it from there and opens it again.
-  - The server was never registered in this Claude app: Claude was installed after Mistika Workflows, the installer did not find it, or this is Claude Code. Register it (step 4).
+  - The app was not completely quit or restarted. On Windows, closing the Claude Desktop window leaves it running next to the clock; on macOS, closing the Claude Desktop window does not quit it either: the user quits it from there and opens it again. In the ChatGPT desktop app, restart the MCP servers from **Settings > MCP servers** and start a new chat or task.
+  - The server was never registered in this app: the app was installed after Mistika Workflows, the installer did not find it, or this is Claude Code. Register it (step 4); `targets` in its result shows which files it wrote.
   - The MCP server executable is missing because the "AI Agents" or MCP components were deselected: run the installer again with them selected.
   - The installed version is older than 11.7: update it (step 3).
+- **In the ChatGPT desktop app, `workflowsMcp` is running but a chat has no `workflows_` tools**: start a Codex task in the desktop app, which uses the same MCP servers, or a new chat.
 - **Claude Desktop shows `workflowsMcp` as failed** (Settings > Developer): read its log, `mcp-server-workflowsMcp.log`, where you can, or ask the user for it. On Windows it is in `%LOCALAPPDATA%\Packages\Claude_*\LocalCache\Roaming\Claude\logs\` for the current Claude Desktop, or in `%APPDATA%\Claude\logs\` for older installations: use the folder whose files changed most recently. On macOS it is in `~/Library/Logs/Claude/`.
+- **The ChatGPT desktop app or Codex does not start `workflowsMcp`** (see **Settings > MCP servers**, `codex mcp list`, or `/mcp` in the Codex CLI): check its entry in the Codex `config.toml`. It is the `[mcp_servers.workflowsMcp]` table, with `command` set to the path of the server executable and `WORKFLOWS_MCP_TRANSPORT = "stdio"` in its `env`, and it must not have `enabled = false`. If the entry is missing or wrong, register it again (step 4).
+- **In the ChatGPT desktop app or Codex, long calls fail with a timeout**, for example while waiting for a workflow: the app stops a tool call after 60 seconds unless the entry sets a longer `tool_timeout_sec`. `--register-client chatgpt` sets 600 seconds; an entry added by hand may lack it, so register it again (step 4). For longer jobs, wait in several shorter calls, as the server's instructions say.
 - **The tools are there but every call fails with a connection error**: Mistika Workflows is not running. Follow the server's instructions: `workflows_launch_application`, then `workflows_wait_for_application_ready`.
 - **Mistika Workflows reports a license problem**: the user activates or renews the license in Mistika Workflows, or gets one from the [plans page](https://www.sgo.es/workflows-creator-plans/), where the evaluation is free.
 

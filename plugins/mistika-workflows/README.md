@@ -1,6 +1,6 @@
-# Mistika Workflows for Claude
+# Mistika Workflows plugin
 
-**Let Claude handle your media tasks.** Transcodes and proxies, color pipelines, metadata reports, VFX pulls, AI dubbing and transcription, quality checks, deliveries and watch folders: describe what you need, and Claude builds and runs it with [Mistika Workflows](https://www.sgo.es/mistika-workflows/), SGO's media automation software, on your own computer.
+**Let your AI assistant handle your media tasks.** Transcodes and proxies, color pipelines, metadata reports, VFX pulls, AI dubbing and transcription, quality checks, deliveries and watch folders: describe what you need, and Claude or ChatGPT builds and runs it with [Mistika Workflows](https://www.sgo.es/mistika-workflows/), SGO's media automation software, on your own computer.
 
 ## What you can ask for
 
@@ -15,13 +15,13 @@
 - "Export the frame rate and resolution of these clips to a CSV file."
 - "Build a workflow for this delivery and save it as a template, so I can reuse it."
 
-Claude picks the right nodes, connects them, checks that the workflow is valid, runs it and tells you what it produced. When a value is missing, such as a destination or a login, Claude asks you instead of guessing.
+The assistant picks the right nodes, connects them, checks that the workflow is valid, runs it and tells you what it produced. When a value is missing, such as a destination or a login, it asks you instead of guessing.
 
 ## Why Mistika Workflows
 
 - **Production-quality processing.** ProRes on Windows, macOS and Linux, DNxHD and DNxHR, XAVC, XDCAM, GPU-accelerated H.264 and H.265, OpenEXR and DPX, from camera RAW too (ARRI, RED, Sony, Canon, Blackmagic RAW, ProRes RAW), with color management and metadata preserved.
-- **Your media stays on your computer.** The files are processed locally by Mistika Workflows; Claude works with the workflow, the file names and the results.
-- **Nothing hidden.** Open Mistika Workflows to watch the workflows Claude builds, adjust them by hand and reuse them. Every run goes through the task queue, with its log.
+- **Your media stays on your computer.** The files are processed locally by Mistika Workflows; the assistant works with the workflow, the file names and the results.
+- **Nothing hidden.** Open Mistika Workflows to watch the workflows the assistant builds, adjust them by hand and reuse them. Every run goes through the task queue, with its log.
 - **More than transcoding.** More than 200 nodes:
   - **Color**: ACES (2.0 included), CDLs, 3D LUTs, CLF and Dolby Vision tone mapping.
   - **Editorial and VFX**: EDL-driven conforms and VFX pulls, reference movies, OpenTimelineIO timelines and ShotGrid publishing.
@@ -31,36 +31,41 @@ Claude picks the right nodes, connects them, checks that the workflow is valid, 
   - **Metadata and files**: reports to CSV and ALE, renaming with metadata tokens, sorting, checksums and MHL, burn-ins and slates.
   - **Integrations**: DaVinci Resolve, After Effects, Mistika Boutique, Ultima and VR, EditReady and the ARRI Reference Tool, plus your own Python nodes and command-line tools.
 - **Hands-off automation.** While Mistika Workflows is running, watch folders start a workflow as soon as files arrive, with notifications when it finishes or fails.
-- **Your templates, your way.** Claude can start from the templates you already use, or save the workflows it builds as new templates that your team can also launch from the Workflows Runner.
+- **Your templates, your way.** The assistant can start from the templates you already use, or save the workflows it builds as new templates that your team can also launch from the Workflows Runner.
 
 Services and applications from other companies, such as ElevenLabs, Amberscript, Pixell AI, QC tools, cloud storage, After Effects or DaVinci Resolve, need your own account or installation.
 
 ## Get started
 
 1. Install this plugin.
-2. Ask Claude: "Set up Mistika Workflows." If you do not have it yet, Claude helps you install it and get a license on the [Workflows Creator plans page](https://www.sgo.es/workflows-creator-plans/): the 30-day evaluation is free, includes every feature and needs no credit card.
-3. Restart Claude and ask for your first task.
+2. Ask your assistant: "Set up Mistika Workflows." If you do not have it yet, the assistant helps you install it and get a license on the [Workflows Creator plans page](https://www.sgo.es/workflows-creator-plans/): the 30-day evaluation is free, includes every feature and needs no credit card.
+3. Restart the app and ask for your first task.
 
-Requirements: Mistika Workflows 11.7 or later. The Mistika Workflows tools work in Claude Desktop (chat and Cowork) on Windows and macOS, and in Claude Code on Windows, macOS and Linux. They are not available in Claude on the web or on mobile, because Mistika Workflows runs on your computer.
+Requirements: Mistika Workflows 11.7 or later. The Mistika Workflows tools work in the apps that run on your computer and connect to local MCP servers:
+
+- Claude Desktop (chat and Cowork) on Windows and macOS, and Claude Code on Windows, macOS and Linux.
+- The ChatGPT desktop app and Codex (CLI and IDE extension).
+
+They are not available on the web or on mobile, because Mistika Workflows runs on your computer.
 
 ## How it works
 
-Mistika Workflows 11.7 and later include an MCP server, `workflowsMcpServer`. The Mistika Workflows installer installs it and connects it to the AI apps it finds on the computer, Claude Desktop included. This plugin adds two skills:
+Mistika Workflows 11.7 and later include an MCP server, `workflowsMcpServer`. The Mistika Workflows installer installs it and connects it to the AI apps it finds on the computer, such as Claude Desktop and the ChatGPT desktop app. This plugin adds two skills:
 
-- **`media-tasks`**: when you ask for a media task, such as a transcode, proxies, a metadata report, a color pipeline, a VFX pull, AI dubbing or transcription, a quality check, a delivery or a watch folder, Claude does it with Mistika Workflows. If Mistika Workflows is not connected yet, Claude tells you what it takes and sets it up with you. It also answers what Mistika Workflows can do.
-- **`get-started`**: installs and connects Mistika Workflows step by step. Claude checks whether it is installed and connected, helps you get a license (the evaluation is free) and the installer for your operating system, connects an existing installation to Claude Desktop or Claude Code, and troubleshoots a connection that fails.
+- **`media-tasks`**: when you ask for a media task, such as a transcode, proxies, a metadata report, a color pipeline, a VFX pull, AI dubbing or transcription, a quality check, a delivery or a watch folder, the assistant does it with Mistika Workflows. If Mistika Workflows is not connected yet, the assistant tells you what it takes and sets it up with you. It also answers what Mistika Workflows can do.
+- **`get-started`**: installs and connects Mistika Workflows step by step. The assistant checks whether it is installed and connected, helps you get a license (the evaluation is free) and the installer for your operating system, connects an existing installation to your app, and troubleshoots a connection that fails.
 
 ## What this plugin runs, sends and fetches
 
 The plugin contains instructions only (two skills). It runs no code when it is installed and it sends no data anywhere.
 
-When you ask Claude to install or connect Mistika Workflows, Claude may, with your confirmation and only where it can run commands on your computer (Claude Code):
+When you ask the assistant to install or connect Mistika Workflows, it may, with your confirmation and only where it can run commands on your computer (such as Claude Code or Codex):
 
 - download the latest Mistika Workflows installer for your system from SGO's download server (`cdn1.www.sgo.es`), check its signature and open it, so you complete the installation yourself;
 - read the SGO installation file (`installation.xml`) to find where Mistika Workflows is installed and which version it is;
-- run `workflowsMcpServer --register-client claude` or `claude mcp add` to connect the installed MCP server to Claude.
+- run `workflowsMcpServer --register-client` or `claude mcp add` to connect the installed MCP server to your app.
 
-Everywhere else Claude gives you the links and the steps instead.
+Everywhere else the assistant gives you the links and the steps instead.
 
 ## Privacy
 

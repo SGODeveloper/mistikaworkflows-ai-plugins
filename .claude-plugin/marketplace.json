@@ -4,12 +4,12 @@
     "name": "SGO",
     "url": "https://www.sgo.es"
   },
-  "description": "SGO plugins for Claude: put Mistika Workflows and other SGO tools to work for you, straight from a conversation.",
+  "description": "SGO plugins: put Mistika Workflows and other SGO tools to work for you, straight from a conversation with your AI assistant.",
   "plugins": [
     {
       "name": "mistika-workflows",
       "source": "./plugins/mistika-workflows",
-      "description": "Let Claude handle your media tasks: transcodes and proxies, color, metadata, VFX pulls, AI dubbing and transcription, QC, deliveries and watch folders, built and run with Mistika Workflows on your own computer.",
+      "description": "Let your AI assistant handle your media tasks: transcodes and proxies, color, metadata, VFX pulls, AI dubbing and transcription, QC, deliveries and watch folders, built and run with Mistika Workflows on your own computer.",
       "category": "media",
       "tags": [
         "mistika",

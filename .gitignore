@@ -8,3 +8,6 @@ __MACOSX/
 *~
 *.bak
 *.swp
+
+# Python caches of the release scripts
+__pycache__/
