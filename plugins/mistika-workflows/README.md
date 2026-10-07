@@ -41,6 +41,8 @@ Services and applications from other companies, such as ElevenLabs, Amberscript,
 2. Ask your assistant: "Set up Mistika Workflows." If you do not have it yet, the assistant helps you install it and get a license on the [Workflows Creator plans page](https://www.sgo.es/workflows-creator-plans/): the 30-day evaluation is free, includes every feature and needs no credit card.
 3. Restart the app and ask for your first task.
 
+Mistika Workflows does not need to be open: if it is closed, the assistant starts it, with its window or in the background.
+
 Requirements: Mistika Workflows 11.7 or later. The Mistika Workflows tools work in the apps that run on your computer and connect to local MCP servers:
 
 - Claude Desktop (chat and Cowork) on Windows and macOS, and Claude Code on Windows, macOS and Linux.

@@ -5,9 +5,9 @@ Each plugin is described twice: once for Claude (.claude-plugin/plugin.json)
 and once in the portable Agent Plugins format used by ChatGPT and Codex
 (plugin.json, with the OpenAI listing under extensions.com.openai). This
 script checks that both manifests agree on the package identity (name,
-version, author, links, license, keywords), that the OpenAI listing fits the
-directory limits, that every referenced file exists, and that every skill has
-a valid header.
+version, author, links, license, keywords), that the Claude listing fields
+(icon and links) and the OpenAI listing fit their directories, that every
+referenced file exists, and that every skill has a valid header.
 
 Usage: python3 scripts/checkManifests.py   (from anywhere; exit code 1 on errors)
 """
@@ -34,6 +34,11 @@ PLUGIN_NAME_PATTERN = re.compile(r"^(?!.*(?:--|\.\.))[a-z0-9](?:[a-z0-9.-]*[a-z0
 
 # Fields both manifests must share.
 SHARED_FIELDS = ("name", "version", "author", "homepage", "repository", "license", "keywords")
+
+# Claude directory listing fields of .claude-plugin/plugin.json (plugin
+# manifest reference: read by Anthropic's directory, ignored by Claude Code).
+CLAUDE_ICON_FIELD = "icon"
+CLAUDE_URL_FIELDS = ("documentationUrl", "supportUrl", "privacyPolicyUrl", "termsOfServiceUrl")
 
 # OpenAI listing limits (plugin submission reference).
 TEXT_LIMITS = {"displayName": 30, "shortDescription": 30, "longDescription": 4000, "developerName": 80}
@@ -77,6 +82,32 @@ def checkRelativeFile(pluginDir: Path, value: str, where: str, report: CcheckRep
         report.error(where, f"file '{value}' not found")
         return None
     return path
+
+
+def checkImage(pluginDir: Path, value: str, where: str, field: str, report: CcheckReport) -> None:
+    """A listing image: a file inside the plugin folder, at most 5 MiB and,
+    when it is a PNG, square and at least MIN_ICON_SIZE pixels wide."""
+    path = checkRelativeFile(pluginDir, value, f"{where} {field}", report)
+    if path is None:
+        return
+    if path.stat().st_size > MAX_IMAGE_BYTES:
+        report.error(where, f"'{field}' is larger than 5 MiB")
+    size = pngSize(path) if path.suffix.lower() == ".png" else None
+    if size is not None and (size[0] != size[1] or size[0] < MIN_ICON_SIZE):
+        report.error(where, f"'{field}' must be square and at least {MIN_ICON_SIZE}x{MIN_ICON_SIZE} (it is {size[0]}x{size[1]})")
+
+
+def checkClaudeListing(pluginDir: Path, manifest: Dict[str, Any], where: str, report: CcheckReport) -> None:
+    """Fields of .claude-plugin/plugin.json that only Anthropic's directory reads."""
+    icon = manifest.get(CLAUDE_ICON_FIELD)
+    if icon is None:
+        report.warning(where, f"no '{CLAUDE_ICON_FIELD}': the Claude directory listing will have no icon")
+    else:
+        checkImage(pluginDir, icon, where, CLAUDE_ICON_FIELD, report)
+    for field in CLAUDE_URL_FIELDS:
+        url = manifest.get(field)
+        if url is not None and not url.startswith("https://"):
+            report.error(where, f"'{field}' must be an HTTPS URL")
 
 
 def checkPortableManifest(manifest: Dict[str, Any], where: str, report: CcheckReport) -> None:
@@ -138,16 +169,8 @@ def checkOpenAiListing(pluginDir: Path, manifest: Dict[str, Any], where: str, re
 
     for field in IMAGE_FIELDS:
         value = interface.get(field)
-        if value is None:
-            continue
-        path = checkRelativeFile(pluginDir, value, f"{listing} {field}", report)
-        if path is None:
-            continue
-        if path.stat().st_size > MAX_IMAGE_BYTES:
-            report.error(listing, f"'{field}' is larger than 5 MiB")
-        size = pngSize(path) if path.suffix.lower() == ".png" else None
-        if size is not None and (size[0] != size[1] or size[0] < MIN_ICON_SIZE):
-            report.error(listing, f"'{field}' must be square and at least {MIN_ICON_SIZE}x{MIN_ICON_SIZE} (it is {size[0]}x{size[1]})")
+        if value is not None:
+            checkImage(pluginDir, value, listing, field, report)
 
     onboardingSkill = openAi.get("onboardingSkill")
     if onboardingSkill is not None:
@@ -210,6 +233,7 @@ def checkPlugin(entry: Dict[str, Any], report: CcheckReport) -> None:
         return
     if claudeManifest.get("name") != entry.get("name"):
         report.error(where, "the marketplace entry and .claude-plugin/plugin.json have different names")
+    checkClaudeListing(pluginDir, claudeManifest, str((pluginDir / CLAUDE_MANIFEST).relative_to(REPO_ROOT)), report)
 
     portablePath = pluginDir / PORTABLE_MANIFEST
     if not portablePath.is_file():

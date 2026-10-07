@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "mistika-workflows",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Let your AI assistant handle your media tasks: transcodes and proxies, color, metadata, VFX pulls, AI dubbing and transcription, QC, deliveries and watch folders, built and run with Mistika Workflows on your own computer.",
   "author": {
     "name": "SGO",
@@ -52,6 +52,7 @@
         "websiteURL": "https://www.sgo.es/mistika-workflows/",
         "supportURL": "https://support.sgo.es",
         "privacyPolicyURL": "https://www.sgo.es/privacy-policy-statement/",
+        "termsOfServiceURL": "https://www.sgo.es/eula/",
         "defaultPrompt": [
           "Set up Mistika Workflows on this computer.",
           "Transcode every .mov in this folder to ProRes 422 HQ.",

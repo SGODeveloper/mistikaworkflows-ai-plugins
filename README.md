@@ -45,7 +45,7 @@ Or, after adding the marketplace, restart the ChatGPT desktop app and install th
 ## Releasing a new version
 
 1. Change the plugin and raise its `version` in both manifests, `.claude-plugin/plugin.json` and `plugin.json`.
-2. Run `python3 scripts/checkManifests.py`. It checks that both manifests agree on the package identity, that the ChatGPT listing fits the directory limits, that every referenced file exists and that every skill has a valid header.
+2. Run `python3 scripts/checkManifests.py`. It checks that both manifests agree on the package identity, that the Claude listing fields (icon, links) and the ChatGPT listing fit their directories, that every referenced file exists and that every skill has a valid header.
 3. Commit and push to `main`.
 
 ## Privacy
