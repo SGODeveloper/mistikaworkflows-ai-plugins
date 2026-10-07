@@ -16,7 +16,7 @@ The tools run on the user's computer, so only apps that run there and start loca
 | App | Where the connection is kept | Registered by the Mistika Workflows installer |
 | --- | --- | --- |
 | Claude Desktop (chat and Cowork) | Claude Desktop's configuration file | Yes, if Claude Desktop was already installed |
-| Claude Code | Claude Code's user configuration (`~/.claude.json`) | No: register it (step 4) |
+| Claude Code | Claude Code's user configuration, managed with `claude mcp` | No: register it (step 4) |
 | ChatGPT desktop app and Codex (CLI and IDE extension) | `config.toml` in the Codex folder, shared by all of them: `~/.codex/config.toml` (`%USERPROFILE%\.codex\config.toml` on Windows), or the folder set in `CODEX_HOME` | Yes, if the ChatGPT desktop app or Codex was already installed |
 
 On the web or on mobile the tools cannot run: tell the user to use one of these apps on the computer where Mistika Workflows is installed.
