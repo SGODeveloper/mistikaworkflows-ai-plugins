@@ -11,3 +11,6 @@ __MACOSX/
 
 # Python caches of the release scripts
 __pycache__/
+
+# Packages built by scripts/buildPackages.py
+dist/

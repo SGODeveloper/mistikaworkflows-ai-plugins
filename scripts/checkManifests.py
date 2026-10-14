@@ -7,7 +7,9 @@ and once in the portable Agent Plugins format used by ChatGPT and Codex
 script checks that both manifests agree on the package identity (name,
 version, author, links, license, keywords), that the Claude listing fields
 (icon and links) and the OpenAI listing fit their directories, that every
-referenced file exists, and that every skill has a valid header.
+referenced file exists, that every skill has a valid header, and that
+nothing the Claude directory reads offers a feature it does not list.
+scripts/buildPackages.py runs the same checks on the packages it builds.
 
 Usage: python3 scripts/checkManifests.py   (from anywhere; exit code 1 on errors)
 """
@@ -19,12 +21,15 @@ import re
 import struct
 import sys
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from checkReport import CcheckReport
+from forbiddenText import CforbiddenText
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MARKETPLACE_FILE = REPO_ROOT / ".claude-plugin" / "marketplace.json"
+REPO_README = REPO_ROOT / "README.md"
+PRIVACY_POLICY = REPO_ROOT / "PRIVACY.md"
 CLAUDE_MANIFEST = Path(".claude-plugin") / "plugin.json"
 PORTABLE_MANIFEST = Path("plugin.json")
 
@@ -51,14 +56,52 @@ MAX_IMAGE_BYTES = 5 * 1024 * 1024
 MIN_ICON_SIZE = 48
 COLOR_PATTERN = re.compile(r"^#[0-9A-Fa-f]{6}$")
 
+# Other AI assistants, models and AI services. The OpenAI review flags a plugin
+# whose name or description references one ("The plugin's name or description
+# references another AI assistant, model, or platform"), so the listing texts,
+# and the skill descriptions of a package for that directory, must not name them.
+OTHER_AI_NAMES = ("Claude", "Anthropic", "Gemini", "Copilot", "Llama", "Mistral", "Grok", "Perplexity", "ElevenLabs", "Amberscript", "Pixell")
+OTHER_AI_PATTERN = re.compile(r"\b(?:" + "|".join(map(re.escape, OTHER_AI_NAMES)) + r")\b", re.IGNORECASE)
+LISTING_TEXT_FIELDS = ("displayName", "shortDescription", "longDescription")
+
+# The Claude directory does not list software that generates audio, video or
+# images with an AI model, even as one feature among many. The plugin folders,
+# the marketplace, the README and the privacy policy, which the directory reads
+# as they are, must not offer such features: AI dubbing, text to speech, speech
+# to speech, voice cloning, AI voices, images and enhancement, and the AI
+# services that provide them.
+# The packages for other directories may put them back (packageVariants.py).
+CLAUDE_DIRECTORY_FORBIDDEN_TEXT = CforbiddenText(
+    patterns=(
+        r"\bdub(?:s|bed|bing)?\b",
+        r"\btext[ -]to[ -]speech\b",
+        r"\bspeech[ -]to[ -]speech\b",
+        r"\bTTS\b",
+        r"\bvoice[ -]?clon",
+        r"\bAI[ -](?:voices?|images?|enhancement|upscaling)\b",
+        r"\bElevenLabs\b",
+        r"\bPixell\b",
+    ),
+    scope="what the Claude directory reads",
+    fix="it does not list AI generation of audio, video or images; offer it only in the package for another directory (scripts/packageVariants.py)",
+)
+
+
+def displayPath(path: Path) -> str:
+    """Path for messages: relative to the repository when it is inside it."""
+    try:
+        return path.resolve().relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        return str(path)
+
 
 def loadJson(path: Path, report: CcheckReport) -> Dict[str, Any] | None:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError:
-        report.error(str(path.relative_to(REPO_ROOT)), "file not found")
+        report.error(displayPath(path), "file not found")
     except json.JSONDecodeError as exception:
-        report.error(str(path.relative_to(REPO_ROOT)), f"invalid JSON ({exception})")
+        report.error(displayPath(path), f"invalid JSON ({exception})")
     return None
 
 
@@ -122,6 +165,12 @@ def checkPortableManifest(manifest: Dict[str, Any], where: str, report: CcheckRe
         report.error(where, "version is required for submission")
 
 
+def checkNoOtherAiNames(text: str, field: str, where: str, report: CcheckReport) -> None:
+    """Reports the other AI assistants, models or services that a text names."""
+    for name in sorted({match.group(0) for match in OTHER_AI_PATTERN.finditer(text)}):
+        report.error(where, f"'{field}' names '{name}': the OpenAI review flags names or descriptions that reference another AI assistant, model or platform")
+
+
 def checkOpenAiListing(pluginDir: Path, manifest: Dict[str, Any], where: str, report: CcheckReport) -> None:
     openAi = manifest.get("extensions", {}).get("com.openai")
     if openAi is None:
@@ -129,6 +178,10 @@ def checkOpenAiListing(pluginDir: Path, manifest: Dict[str, Any], where: str, re
         return
     interface = openAi.get("interface", {})
     listing = f"{where} (com.openai.interface)"
+
+    checkNoOtherAiNames(manifest.get("description", ""), "description", where, report)
+    for field in LISTING_TEXT_FIELDS:
+        checkNoOtherAiNames(interface.get(field, ""), field, listing, report)
 
     for field in REQUIRED_INTERFACE_FIELDS:
         if not interface.get(field):
@@ -192,12 +245,16 @@ def readFrontmatter(text: str) -> Dict[str, str] | None:
     return None
 
 
+def skillFilesOf(pluginDir: Path) -> List[Path]:
+    return sorted((pluginDir / "skills").glob("*/SKILL.md"))
+
+
 def checkSkills(pluginDir: Path, where: str, report: CcheckReport) -> None:
-    skillFiles = sorted((pluginDir / "skills").glob("*/SKILL.md"))
+    skillFiles = skillFilesOf(pluginDir)
     if not skillFiles:
         report.error(where, "no skills/<name>/SKILL.md found")
     for skillFile in skillFiles:
-        skillWhere = str(skillFile.relative_to(REPO_ROOT))
+        skillWhere = displayPath(skillFile)
         fields = readFrontmatter(skillFile.read_text(encoding="utf-8"))
         if fields is None:
             report.error(skillWhere, "missing '---' header")
@@ -217,7 +274,34 @@ def checkAscii(pluginDir: Path, report: CcheckReport) -> None:
         if path.suffix.lower() in (".md", ".json") and path.is_file():
             for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
                 if any(ord(character) > 127 for character in line):
-                    report.warning(f"{path.relative_to(REPO_ROOT)}:{number}", "non-ASCII characters")
+                    report.warning(f"{displayPath(path)}:{number}", "non-ASCII characters")
+
+
+def checkPortableManifestFile(pluginDir: Path, report: CcheckReport) -> Dict[str, Any] | None:
+    """plugin.json of a plugin folder or package: the Agent Plugins manifest
+    and its OpenAI listing. Returns the manifest, None when it is unreadable."""
+    path = pluginDir / PORTABLE_MANIFEST
+    manifest = loadJson(path, report)
+    if manifest is not None:
+        checkPortableManifest(manifest, displayPath(path), report)
+        checkOpenAiListing(pluginDir, manifest, displayPath(path), report)
+    return manifest
+
+
+def checkContent(pluginDir: Path, where: str, report: CcheckReport) -> None:
+    """What every app reads besides the manifests: the skills and the text files."""
+    checkSkills(pluginDir, where, report)
+    checkAscii(pluginDir, report)
+
+
+def checkPortablePackage(packageDir: Path, report: CcheckReport) -> None:
+    """A package with the portable manifest only, such as the one uploaded to
+    the OpenAI plugin directory, whose review also reads the skill descriptions."""
+    checkPortableManifestFile(packageDir, report)
+    checkContent(packageDir, displayPath(packageDir), report)
+    for skillFile in skillFilesOf(packageDir):
+        fields = readFrontmatter(skillFile.read_text(encoding="utf-8")) or {}
+        checkNoOtherAiNames(fields.get("description", ""), "description", displayPath(skillFile), report)
 
 
 def checkPlugin(entry: Dict[str, Any], report: CcheckReport) -> None:
@@ -233,39 +317,40 @@ def checkPlugin(entry: Dict[str, Any], report: CcheckReport) -> None:
         return
     if claudeManifest.get("name") != entry.get("name"):
         report.error(where, "the marketplace entry and .claude-plugin/plugin.json have different names")
-    checkClaudeListing(pluginDir, claudeManifest, str((pluginDir / CLAUDE_MANIFEST).relative_to(REPO_ROOT)), report)
+    checkClaudeListing(pluginDir, claudeManifest, displayPath(pluginDir / CLAUDE_MANIFEST), report)
 
-    portablePath = pluginDir / PORTABLE_MANIFEST
-    if not portablePath.is_file():
+    if not (pluginDir / PORTABLE_MANIFEST).is_file():
         report.warning(where, "no plugin.json: Claude-only plugin (ChatGPT and Codex fall back to the Claude manifest)")
     else:
-        portableManifest = loadJson(portablePath, report)
+        portableManifest = checkPortableManifestFile(pluginDir, report)
         if portableManifest is not None:
-            portableWhere = str(portablePath.relative_to(REPO_ROOT))
-            checkPortableManifest(portableManifest, portableWhere, report)
             for field in SHARED_FIELDS:
                 if claudeManifest.get(field) != portableManifest.get(field):
                     report.error(where, f"'{field}' differs between .claude-plugin/plugin.json and plugin.json")
-            checkOpenAiListing(pluginDir, portableManifest, portableWhere, report)
 
-    checkSkills(pluginDir, where, report)
-    checkAscii(pluginDir, report)
+    checkContent(pluginDir, where, report)
+    CLAUDE_DIRECTORY_FORBIDDEN_TEXT.checkFolder(pluginDir, displayPath(pluginDir), report)
 
 
-def main() -> int:
-    report = CcheckReport()
+def checkRepository(report: CcheckReport) -> List[Dict[str, Any]]:
+    """Checks every plugin of the marketplace and returns their entries."""
     marketplace = loadJson(MARKETPLACE_FILE, report)
     entries = marketplace.get("plugins", []) if marketplace else []
     for entry in entries:
         checkPlugin(entry, report)
+    for path in (MARKETPLACE_FILE, REPO_README, PRIVACY_POLICY):
+        if path.is_file():
+            CLAUDE_DIRECTORY_FORBIDDEN_TEXT.checkFile(path, displayPath(path), report)
+    return entries
 
-    for warning in report.warnings:
-        print(f"warning: {warning}")
-    for error in report.errors:
-        print(f"error: {error}")
+
+def main() -> int:
+    report = CcheckReport()
+    entries = checkRepository(report)
+    report.printProblems()
     names = ", ".join(entry.get("name", "?") for entry in entries)
     print(f"{len(entries)} plugin(s) checked ({names}): {len(report.errors)} error(s), {len(report.warnings)} warning(s)")
-    return 1 if report.errors else 0
+    return 1 if report.hasErrors() else 0
 
 
 if __name__ == "__main__":

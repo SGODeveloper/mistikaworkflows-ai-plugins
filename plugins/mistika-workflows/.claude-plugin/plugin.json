@@ -1,8 +1,8 @@
 {
   "name": "mistika-workflows",
   "displayName": "Mistika Workflows",
-  "version": "0.5.2",
-  "description": "Let Claude handle your media tasks: transcodes and proxies, color, metadata, VFX pulls, AI dubbing and transcription, QC, deliveries and watch folders, built and run with Mistika Workflows on your own computer.",
+  "version": "0.6.0",
+  "description": "Let Claude handle your media tasks: transcodes and proxies, color, metadata, VFX pulls, transcription, QC, deliveries and watch folders, built and run with Mistika Workflows on your own computer.",
   "author": {
     "name": "SGO",
     "url": "https://www.sgo.es"
@@ -13,7 +13,7 @@
   "icon": "./assets/logo.png",
   "documentationUrl": "https://github.com/SGODeveloper/mistikaworkflows-ai-plugins/blob/main/plugins/mistika-workflows/README.md",
   "supportUrl": "https://support.sgo.es",
-  "privacyPolicyUrl": "https://www.sgo.es/privacy-policy-statement/",
+  "privacyPolicyUrl": "https://github.com/SGODeveloper/mistikaworkflows-ai-plugins/blob/main/PRIVACY.md",
   "termsOfServiceUrl": "https://www.sgo.es/eula/",
   "keywords": [
     "mistika",
@@ -29,7 +29,6 @@
     "sgo",
     "color",
     "qc",
-    "dubbing",
     "transcription",
     "vfx",
     "aces",
